@@ -1,10 +1,10 @@
-import { FC, Fragment, useState, useEffect } from "react";
-import { Table, TableBody, TableContainer, TableCell, TableRow, TableHead, Paper, TableFooter, TablePagination } from '@mui/material'
-import User from "../../domain/entities/user.class";
-import { columnsTableUsers } from "../../infrastucture/data/columns-table";
-import UserService from "../../application/services/userService.class";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from '@mui/material';
+import { FC, Fragment, useEffect, useState } from "react";
 import { ioc_container } from "../../../../kernel/ioc/ioc-container";
 import { IOC_TYPES } from "../../../../kernel/ioc/ioc-types";
+import UserService from "../../application/services/userService.class";
+import User from "../../domain/entities/user.class";
+import { columnsTableUsers } from "../../infrastucture/data/columns-table";
 
 export const TableUsers: FC = () => {
 
@@ -17,7 +17,7 @@ export const TableUsers: FC = () => {
         await userService.fetchUsersByPage(pageNumer);
         if (userService.getUsers().length !== 0) {
             setUsersDataSource(userService.getUsers());
-        } 
+        }
     }
 
     useEffect(() => {
@@ -38,7 +38,7 @@ export const TableUsers: FC = () => {
                 </TableHead>
                 <TableBody>
                     {usersDataSource.map((row, index) => (
-                        <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                        <TableRow data-testid='table-users-row' key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell align="right">{row.first_name}</TableCell>
                             <TableCell align="right">{row.email}</TableCell>
                             <TableCell align="right">{row.job}</TableCell>
@@ -53,7 +53,7 @@ export const TableUsers: FC = () => {
                             rowsPerPage={5}
                             page={usersDataSource.length <= 0 ? 0 : currentPage - 1}
                             onPageChange={() => {
-                                if(userService.getTableOptions().total_pages === currentPage) {
+                                if (userService.getTableOptions().total_pages === currentPage) {
                                     setCurrentPage(currentPage - 1);
                                 } else {
                                     setCurrentPage(currentPage + 1);
