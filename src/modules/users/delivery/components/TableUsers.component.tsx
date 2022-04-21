@@ -71,7 +71,6 @@ export const TableUsers: FC = () => {
                                 if (userService.getTableOptions().total_pages === currentPage) {
                                     setCurrentPage(currentPage - 1);
                                     setPageDirecction('preview');
-                                    console.log('her')
                                 } else {
                                     setCurrentPage(currentPage + 1);
                                     setPageDirecction('next');
