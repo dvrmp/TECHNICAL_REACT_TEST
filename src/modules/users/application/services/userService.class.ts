@@ -14,14 +14,14 @@ export default class UserService {
     @inject(IOC_TYPES.Logger)
     private readonly reduxLogger: ReduxLogger;
 
-    async fetchUsersByPage(numberPage: number): Promise<void> {
+    async fetchUsersByPage(pageNumber: number): Promise<void> {
         try {
-            store.dispatch(user_actions.fetch_user_request());
-            const users = await this.userRepository.getByPage(numberPage);
-            store.dispatch(user_actions.fetch_user_success(users));
+            store.dispatch(user_actions.fetch_users_failure());
+            const users = await this.userRepository.getByPage(pageNumber);
+            store.dispatch(user_actions.fetch_users_success(users));
         } catch (error) {
             const secureError = error as Error;
-            store.dispatch(user_actions.fetch_user_failure(secureError));
+            store.dispatch(user_actions.fetch_users_failure(secureError));
             this.reduxLogger.write(secureError.message, 0);
         }        
     }

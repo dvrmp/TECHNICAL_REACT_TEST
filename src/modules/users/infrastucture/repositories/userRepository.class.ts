@@ -12,8 +12,8 @@ export default class UserRepository implements Repository<User> {
     @inject(IOC_TYPES.Communication)
     private readonly httpClient: HttpClient;
 
-    async getByPage(numberPage: number): Promise<User[]> {
-        const response = await this.httpClient.get<UsersResponseDTO>(`${routes.get_users_by_page}${numberPage}`);
+    async getByPage(pageNumber: number): Promise<User[]> {
+        const response = await this.httpClient.get<UsersResponseDTO>(`${routes.get_users_by_page}${pageNumber}`);
         return response.data;
     }
 }
