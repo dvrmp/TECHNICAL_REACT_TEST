@@ -4,7 +4,7 @@ import { Repository } from "../../../../kernel/interfaces/repository.interface";
 import { IOC_TYPES } from "../../../../kernel/ioc/ioc-types";
 import { routes } from "../../../../routes/routes";
 import { UsersResponseDTO } from "../../domain/interfaces/dtos/users-response-dto.interface";
-import User from "../../domain/models/user.class";
+import User from "../../domain/entities/user.class";
 
 @injectable()
 export default class UserRepository implements Repository<User> {

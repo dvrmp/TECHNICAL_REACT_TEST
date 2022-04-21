@@ -1,4 +1,4 @@
-import User from "../../models/user.class";
+import User from "../../entities/user.class";
 
 export interface UsersResponseDTO {
     page: number;

@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 import UserService from '../../modules/users/application/services/userService.class';
-import User from '../../modules/users/domain/models/user.class';
+import User from '../../modules/users/domain/entities/user.class';
 import UserRepository from '../../modules/users/infrastucture/repositories/userRepository.class';
 import HttpClient from '../infrastucture/httpClient.class';
 import ReduxLogger from '../infrastucture/logger.class';

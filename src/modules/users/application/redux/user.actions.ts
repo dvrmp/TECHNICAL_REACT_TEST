@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import User from "../../domain/models/user.class";
+import User from "../../domain/entities/user.class";
 
 const MODULE: string = '@USERS/';
 

@@ -1,10 +1,11 @@
 export default class User {
     public id: number;
-    public job: string;
+    public job?: string;
     public email: string;
     public first_name: string;
     public last_name: string;
     public avatar: string;
+    public created_at?: string;
 
     constructor(job: string, email: string, first_name: string, last_name: string, avatar: string) {
         this.job = job;
