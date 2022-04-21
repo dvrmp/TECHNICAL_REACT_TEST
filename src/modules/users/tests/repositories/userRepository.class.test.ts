@@ -5,12 +5,16 @@ import UserRepository from '../../infrastucture/repositories/userRepository.clas
 import { ioc_container } from '../../../../kernel/ioc/ioc-container';
 import { IOC_TYPES } from '../../../../kernel/ioc/ioc-types';
 import UsersResponseMock from '../../../../mocks/UsersResponse.mock.json';
+import UsersMock from '../../../../mocks/Users.mock.json';
 import { routes } from '../../../../routes/routes';
+import createMockStore from 'redux-mock-store';
+import { AppDispatch, RootState } from '../../../../kernel/redux/store';
 
 describe('MODULE: USERS | REPOSITORY: UserRepository', () => {
-    test('[Method: getByPage]: Should return an array', async () => {
+    const userRepository = ioc_container.get<UserRepository>(IOC_TYPES.Repository);
+
+    test('[Method: getByPage]: Should return an users array by page from http', async () => {
         const pageNumber = 2;
-        const userRepository = ioc_container.get<UserRepository>(IOC_TYPES.Repository);
         const axiosMock = new MockAdapter(axios);
         const fetchData = UsersResponseMock;
 
@@ -18,6 +22,14 @@ describe('MODULE: USERS | REPOSITORY: UserRepository', () => {
         axiosMock.onGet(url).reply(200, fetchData);
 
         const users = await userRepository.getByPage(pageNumber);
+        expect(users).toBeInstanceOf(Array);
+    })
+
+    test('[Method: getByPage]: Should return an users array from state', async () => {
+        const mockStore = createMockStore<RootState, AppDispatch>();
+        const store = mockStore({ users: { users: UsersMock } });
+        userRepository.setStore(store);
+        const users = userRepository.getAll();
         expect(users).toBeInstanceOf(Array);
     })
 });

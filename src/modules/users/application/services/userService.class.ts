@@ -2,6 +2,7 @@ import { inject, injectable } from "inversify";
 import ReduxLogger from "../../../../kernel/infrastucture/logger.class";
 import { IOC_TYPES } from "../../../../kernel/ioc/ioc-types";
 import { store } from "../../../../kernel/redux/store";
+import User from "../../domain/entities/user.class";
 import RandomAttribute from "../../domain/models/randomAttribute.class";
 import UserRepository from "../../infrastucture/repositories/userRepository.class";
 import { user_actions } from "../redux/user.actions";
@@ -26,6 +27,10 @@ export default class UserService {
             store.dispatch(user_actions.fetch_users_failure(secureError));
             this.reduxLogger.write(secureError.message, 0);
         }        
+    }
+
+    getUsers(): User[] {
+        return this.userRepository.getAll();
     }
 
 }

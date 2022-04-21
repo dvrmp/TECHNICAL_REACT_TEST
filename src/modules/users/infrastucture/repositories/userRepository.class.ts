@@ -5,9 +5,14 @@ import { IOC_TYPES } from "../../../../kernel/ioc/ioc-types";
 import { routes } from "../../../../routes/routes";
 import { UsersResponseDTO } from "../../domain/interfaces/dtos/users-response-dto.interface";
 import User from "../../domain/entities/user.class";
+import { store } from "../../../../kernel/redux/store";
+import { EnhancedStore } from "@reduxjs/toolkit";
+import { MockStoreEnhanced } from "redux-mock-store";
 
 @injectable()
 export default class UserRepository implements Repository<User> {
+
+    private store: EnhancedStore | MockStoreEnhanced = store;
 
     @inject(IOC_TYPES.Communication)
     private readonly httpClient: HttpClient;
@@ -15,5 +20,13 @@ export default class UserRepository implements Repository<User> {
     async getByPage(pageNumber: number): Promise<User[]> {
         const response = await this.httpClient.get<UsersResponseDTO>(`${routes.get_users_by_page}${pageNumber}`);
         return response.data;
+    }
+
+    getAll(): User[] {
+        return this.store.getState().users.users;
+    }
+
+    public setStore(store: MockStoreEnhanced) {
+        this.store = store;
     }
 }
