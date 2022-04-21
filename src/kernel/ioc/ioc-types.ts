@@ -1,8 +1,9 @@
 const IOC_TYPES = {
-    Communication: Symbol.for('Communication'),
+    HttpClient: Symbol.for('HttpClient'),
+    MemoryClient: Symbol.for('MemoryClient'),
     Logger: Symbol.for('Logger'),
     Repository: Symbol.for('Repository'),
-    UserService: Symbol.for('UserService')
+    UserService: Symbol.for('UserService'),
 }
 
 export { IOC_TYPES };

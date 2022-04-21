@@ -1,9 +1,10 @@
 import { inject, injectable } from "inversify";
 import ReduxLogger from "../../../../kernel/infrastucture/logger.class";
+import MemoryClient from "../../../../kernel/infrastucture/memoryClient";
 import { IOC_TYPES } from "../../../../kernel/ioc/ioc-types";
 import { store } from "../../../../kernel/redux/store";
 import User from "../../domain/entities/user.class";
-import RandomAttribute from "../../domain/models/randomAttribute.class";
+import { OptionsUsersTable } from "../../domain/interfaces/states/options-users-table.interface";
 import UserRepository from "../../infrastucture/repositories/userRepository.class";
 import { user_actions } from "../redux/user.actions";
 
@@ -16,12 +17,14 @@ export default class UserService {
     @inject(IOC_TYPES.Logger)
     private readonly reduxLogger: ReduxLogger;
 
+    @inject(IOC_TYPES.MemoryClient)
+    private readonly memoryClient: MemoryClient;
+
     async fetchUsersByPage(pageNumber: number): Promise<void> {
         try {
-            store.dispatch(user_actions.fetch_users_failure());
+            store.dispatch(user_actions.fetch_users_request());
             const users = await this.userRepository.getByPage(pageNumber);
-            const preparedUsers = users.map(user => ({...user, job: RandomAttribute.generateJob(), created_at: RandomAttribute.generateCreatedAt()}));
-            store.dispatch(user_actions.fetch_users_success(preparedUsers));
+            store.dispatch(user_actions.fetch_users_success(users));
         } catch (error) {
             const secureError = error as Error;
             store.dispatch(user_actions.fetch_users_failure(secureError));
@@ -31,6 +34,10 @@ export default class UserService {
 
     getUsers(): User[] {
         return this.userRepository.getAll();
+    }
+
+    getTableOptions(): OptionsUsersTable {
+        return this.memoryClient.get<OptionsUsersTable>('users','table_options');
     }
 
 }

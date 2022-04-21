@@ -27,7 +27,7 @@ describe('MODULE: USERS | REPOSITORY: UserRepository', () => {
 
     test('[Method: getByPage]: Should return an users array from state', async () => {
         const mockStore = createMockStore<RootState, AppDispatch>();
-        const store = mockStore({ users: { users: UsersMock } });
+        const store = mockStore({ users: { users: UsersMock, table_options: null } });
         userRepository.setStore(store);
         const users = userRepository.getAll();
         expect(users).toBeInstanceOf(Array);

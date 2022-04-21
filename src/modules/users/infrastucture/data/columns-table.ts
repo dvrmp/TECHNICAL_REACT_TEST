@@ -4,7 +4,7 @@
     accessor: 'name',
   },
   {
-    title: 'Eamil',
+    title: 'Email',
     accessor: 'email',
   },
   {

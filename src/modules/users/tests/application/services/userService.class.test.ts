@@ -13,6 +13,7 @@ import { routes } from '../../../../../routes/routes';
 import createMockStore from 'redux-mock-store';
 import { AppDispatch, RootState } from '../../../../../kernel/redux/store';
 import UserRepository from '../../../infrastucture/repositories/userRepository.class';
+import { OptionsUsersTable } from '../../../domain/interfaces/states/options-users-table.interface';
 
 describe('MODULE: USERS | SERVICE: UsersService', () => {
 
@@ -33,14 +34,30 @@ describe('MODULE: USERS | SERVICE: UsersService', () => {
             users: UsersMock
         }
         expect(usersReducer(users_initial_state, user_actions.fetch_users_success(UsersMock))).toEqual(expected);
-    })
+    });
 
     
-    test('[Method: fetchUsersByPage]: Should return an users array', async () => {
+    test('[Method: getUsers]: Should return an users array', async () => {
         const mockStore = createMockStore<RootState, AppDispatch>();
-        const store = mockStore({ users: { users: UsersMock } });
+        const store = mockStore({ users: { users: UsersMock, table_options: null }});
         userRepository.setStore(store);
         const users = userService.getUsers();
         expect(users).toBeInstanceOf(Array);
-    })
+    });
+
+    test('[Method: getTableOptions]: Should return an users array', async () => {
+        const expectedOptionsTable: OptionsUsersTable = {
+            page: UsersResponseMock.page,
+            per_page: UsersResponseMock.per_page,
+            total: UsersResponseMock.total,
+            total_pages: UsersResponseMock.total_pages
+        }
+
+        const mockStore = createMockStore<RootState, AppDispatch>();
+        const store = mockStore({ users: { users: UsersMock, table_options: expectedOptionsTable}});
+        userRepository.setStore(store);
+        const tableOptions = userService.getTableOptions();
+
+        expect(tableOptions).toEqual(expectedOptionsTable);
+    });
 });

@@ -4,13 +4,17 @@ import User from '../../modules/users/domain/entities/user.class';
 import UserRepository from '../../modules/users/infrastucture/repositories/userRepository.class';
 import HttpClient from '../infrastucture/httpClient.class';
 import ReduxLogger from '../infrastucture/logger.class';
+import MemoryClient from '../infrastucture/memoryClient';
 import { Communication } from '../interfaces/communication.interface';
 import { Logger } from '../interfaces/logger.interface';
 import { Repository } from '../interfaces/repository.interface';
 import { IOC_TYPES } from './ioc-types';
 
 const ioc_container = new Container();
-ioc_container.bind<Communication>(IOC_TYPES.Communication).to(HttpClient);
+
+ioc_container.bind<Communication>(IOC_TYPES.HttpClient).to(HttpClient);
+
+ioc_container.bind<MemoryClient>(IOC_TYPES.MemoryClient).to(MemoryClient);
 
 ioc_container.bind<Repository<User>>(IOC_TYPES.Repository).to(UserRepository);
 ioc_container.bind<UserService>(IOC_TYPES.UserService).to(UserService);
