@@ -3,7 +3,6 @@ import { TableUsers } from "../components/TableUsers.component";
 
 export const UserPage: FC = () => {
     return <Fragment>
-        USERS PAGE
         <TableUsers />
     </Fragment>
 }

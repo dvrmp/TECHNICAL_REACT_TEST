@@ -11,13 +11,13 @@ export const users_initial_state: UsersState = {
 
 export const usersReducer: ReducerWithInitialState<UsersState> = createReducer(users_initial_state, (builder) => {
     builder.addCase(user_actions.fetch_users_success, (state, action) => {
-        state.users = action.payload.map(user => {
+        state.users = [...state.users, ...action.payload.map(user => {
             return {
                 ...user,
                 job: user.job || RandomAttribute.generateJob(),
                 created_at: user.created_at || RandomAttribute.generateCreatedAt()
             };
-        });
+        })];
     });
     builder.addCase(user_actions.set_table_options, (state, action) => {
         state.table_options = {

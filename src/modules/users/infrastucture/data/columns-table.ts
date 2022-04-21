@@ -11,4 +11,13 @@
     title: 'Job',
     accessor: 'job',
   },
+  {
+    title: '',
+    accessor: 'update',
+  },
+  {
+    title: '',
+    accessor: 'delete',
+  },
+
 ];
