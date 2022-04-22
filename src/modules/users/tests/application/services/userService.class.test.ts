@@ -39,7 +39,7 @@ describe('MODULE: USERS | SERVICE: UsersService', () => {
     
     test('[Method: getUsers]: Should return an users array', async () => {
         const mockStore = createMockStore<RootState, AppDispatch>();
-        const store = mockStore({ users: { users: UsersMock, table_options: null }});
+        const store = mockStore({ users: { users: UsersMock, table_options: null, selected: null }});
         userRepository.setStore(store);
         const users = userService.getUsers();
         expect(users).toBeInstanceOf(Array);
@@ -54,7 +54,7 @@ describe('MODULE: USERS | SERVICE: UsersService', () => {
         }
 
         const mockStore = createMockStore<RootState, AppDispatch>();
-        const store = mockStore({ users: { users: UsersMock, table_options: expectedOptionsTable}});
+        const store = mockStore({ users: { users: UsersMock, table_options: expectedOptionsTable, selected: null}});
         userRepository.setStore(store);
         const tableOptions = userService.getTableOptions();
 

@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from "../../redux/store";
 import UsersMock from '../../../mocks/Users.mock.json';
 import MemoryClient from "../memoryClient";
 import User from "../../../modules/users/domain/entities/user.class";
+import { user_actions } from "../../../modules/users/application/redux/user.actions";
 
 describe('Class: MemoryClient', () => {
 
@@ -13,10 +14,10 @@ describe('Class: MemoryClient', () => {
 
     test('[Method: get]: Should return an parameterize reponse', async () => {
         const mockStore = createMockStore<RootState, AppDispatch>();
-        const store = mockStore({ users: { users: UsersMock, table_options: null } });
+        const store = mockStore({ users: { users: UsersMock, table_options: null, selected: null } });
         memoryClient.setStore(store);
         const users = memoryClient.get<User[]>('users','users');
 
         expect(users).toBeInstanceOf(Array);
-    })
+    });
 })

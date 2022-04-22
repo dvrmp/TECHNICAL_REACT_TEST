@@ -36,8 +36,19 @@ export default class UserService {
         return this.userRepository.getAll();
     }
 
+    selectUser(user: User): void {
+        store.dispatch(user_actions.select_user(user));
+    }
+
+    getSelectedUser(): User {
+        return this.userRepository.getUserSelected()
+    }
+
+    editUser(user: User): void {
+        this.userRepository.editUser(user);
+    }
+
     getTableOptions(): OptionsUsersTable {
         return this.memoryClient.get<OptionsUsersTable>('users','table_options');
     }
-
 }

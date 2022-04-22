@@ -6,7 +6,8 @@ import { user_actions } from "./user.actions";
 
 export const users_initial_state: UsersState = {
     users: [],
-    table_options: null
+    table_options: null,
+    selected: null
 }
 
 export const usersReducer: ReducerWithInitialState<UsersState> = createReducer(users_initial_state, (builder) => {
@@ -19,6 +20,7 @@ export const usersReducer: ReducerWithInitialState<UsersState> = createReducer(u
             };
         })];
     });
+
     builder.addCase(user_actions.set_table_options, (state, action) => {
         state.table_options = {
             page: action.payload.page,
@@ -26,5 +28,22 @@ export const usersReducer: ReducerWithInitialState<UsersState> = createReducer(u
             total_pages: action.payload.total_pages,
             total: action.payload.total
         }
-    })
+    });
+
+    builder.addCase(user_actions.select_user, (state, action) => {
+        state.selected = action.payload;
+    });
+
+    builder.addCase(user_actions.unselect_user, (state, action) => {
+        state.selected = null;
+    });
+
+    builder.addCase(user_actions.edit_user, (state, action) => {
+        state.users = state.users.map(user => {
+            if(user.id === action.payload.id) {
+                user = action.payload;
+            }
+             return user
+        })
+    });
 });

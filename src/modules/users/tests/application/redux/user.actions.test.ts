@@ -31,4 +31,24 @@ describe('MODULE: USERS | REDUX: actions', () => {
         }
         expect(user_actions.set_table_options(UsersResponseMock)).toEqual(expected);
     });
+    test('select_user', () => {
+        const expected = {
+            type: user_actions.select_user.type,
+            payload: UsersMock[0]
+        }
+        expect(user_actions.select_user(UsersMock[0])).toEqual(expected);
+    });
+    test('unselect_user', () => {
+        const expected = {
+            type: user_actions.unselect_user.type,
+        }
+        expect(user_actions.unselect_user()).toEqual(expected);
+    });
+    test('edit_user', () => {
+        const expected = {
+            type: user_actions.edit_user.type,
+            payload: UsersMock[0]
+        }
+        expect(user_actions.edit_user(UsersMock[0])).toEqual(expected);
+    });
 })

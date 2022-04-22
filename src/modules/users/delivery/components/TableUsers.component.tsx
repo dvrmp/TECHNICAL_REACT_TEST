@@ -6,6 +6,7 @@ import { IOC_TYPES } from "../../../../kernel/ioc/ioc-types";
 import UserService from "../../application/services/userService.class";
 import User from "../../domain/entities/user.class";
 import { columnsTableUsers } from "../../infrastucture/data/columns-table";
+import { Link } from "react-router-dom";
 
 export const TableUsers: FC = () => {
 
@@ -51,7 +52,11 @@ export const TableUsers: FC = () => {
                             <TableCell align="right">{row.job}</TableCell>
                             <TableCell align="right">{row.job}</TableCell>
                             <TableCell align="right">
-                                <ArticleOutlined />
+                                <Link to={`edit-user/id=${row.id}`} onClick={() => {
+                                    userService.selectUser(row);
+                                }}>
+                                    <ArticleOutlined />
+                                </Link>
                             </TableCell>
                             <TableCell align="right">
                                 <DeleteOutline />
